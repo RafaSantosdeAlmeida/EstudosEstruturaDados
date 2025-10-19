@@ -25,9 +25,9 @@ public class Node<T> {
         return data;
     }
 
-    public Node<T> getNext() throws Exception{
+    public Node<T> getNext(){
         if (hasNext()){
-            throw new Exception("Node dont has next.");
+            return null;
         }
         return next;
     }

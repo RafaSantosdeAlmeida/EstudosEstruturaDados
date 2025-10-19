@@ -11,8 +11,8 @@ package estruturasdados;
 public class Main {
     public static void main(String[] args) {
         // StaticStackTest();
-        StaticQueueTest();
-        
+        // StaticQueueTest();
+        // LinkedListTest();
     }
     
     public static void StaticStackTest(){
@@ -95,6 +95,53 @@ public class Main {
 
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
+    public static void LinkedListTest() {
+        try {
+            LinkedList<Integer> lista = new LinkedList<>();
+
+            System.out.println("Lista criada: " + lista);
+
+            // Inserções
+            lista.insertAtBeginning(10);
+            lista.insertAtBeginning(5);
+            lista.insertAtEnd(20);
+            lista.insertAtEnd(25);
+
+            System.out.println("Após inserções: " + lista);
+
+            // Inserção no meio
+            lista.insertAt(2, 15);
+            System.out.println("Após inserir 15 na posição 2: " + lista);
+
+            // Busca
+            System.out.println("Elemento na posição 2: " + lista.search(2));
+
+            // Contém
+            System.out.println("Lista contém 20? " + lista.contains(20));
+            System.out.println("Lista contém 100? " + lista.contains(100));
+
+            // Remoções
+            lista.removeAtBeginning();
+            System.out.println("Após remover no início: " + lista);
+
+            lista.removeAtEnd();
+            System.out.println("Após remover no fim: " + lista);
+
+            lista.removeAt(1);
+            System.out.println("Após remover na posição 1: " + lista);
+
+            // Tamanho
+            System.out.println("Tamanho da lista: " + lista.size());
+
+            // Limpar lista
+            lista.clear();
+            System.out.println("Após limpar a lista: " + lista);
+
+        } catch (Exception e) {
+            System.err.println("Erro: " + e.getMessage());
         }
     }
     
