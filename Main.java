@@ -144,5 +144,36 @@ public class Main {
             System.err.println("Erro: " + e.getMessage());
         }
     }
+
+    public static boolean verificarFechamentoExpressao(String expressao) throws Exception{
+        DinamicStack<Character> pilhaSimbolosPontuacao = new DinamicStack<>();
+        char[] listaCaracteres = expressao.toCharArray();
+
+        // Verificar ordem dos parenteses
+        for (char c : listaCaracteres) {
+            if ((c == '(') || (c == '[') || (c == '{')) {
+                pilhaSimbolosPontuacao.push(c);
+            }
+            else if ((c == ')') || (c == ']') || (c == ']')) {
+                char proximoFechamento = pilhaSimbolosPontuacao.peek();
+                if (!verificarCombinacao(proximoFechamento, c)) {
+                    return false;
+                }
+                pilhaSimbolosPontuacao.pop();
+            }
+        }
+
+        // Verifica se sobrou algum para fechar
+        if (pilhaSimbolosPontuacao.size() != 0) return false;
+
+        return true;
+    }
+
+    public static boolean verificarCombinacao(char abertura, char fechamento) {
+        if (((abertura == '(') && (fechamento == ')')) || ((abertura == '[') && (fechamento == ']')) || ((abertura == '{') && (fechamento == '}'))) {
+            return true;
+        }
+        return false;
+    }
     
 }
