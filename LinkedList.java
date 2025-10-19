@@ -13,56 +13,129 @@ public class LinkedList<T> {
     private Node<T> last;
     private int size;
 
+    public Node<T> getFirst() {
+        return first;
+    }
+
+    public Node<T> getLast() {
+        return last;
+    }
+
     public void insertAtBeginning(T element) {
         if (isEmpty()) {
             first = new Node<T>(element);
-            last = new Node<T>(element);
-            size = 1;
+            last = first;
         }
         else {
-            first = new Node<T>(element, first);
-            size ++;
+            Node<T> novo = new Node<T>(element, first);
+            first = novo;
         }
+        this.size ++;
     }
 
     public void insertAtEnd(T element) throws Exception {
         if (isEmpty()) {
             first = new Node<T>(element);
-            last = new Node<T>(element);
-            size = 1;
+            last = first;
         }
         else {
             last.setNext(new Node<T>(element));
             last = last.getNext();
         }
+        this.size++;
     }
 
-    public void insertAt(int position, T elemento) throws Exception {
+    public void insertAt(int position, T element) throws Exception {
         if (isEmpty()) {
             throw new Exception("A lista esta vazia.");
         }
-        elif (size < position+1) {
-            throw new Exce
+        else if (this.size < position+1) {
+            throw new Exception("A posicao " + position + " nao existe na lista.");
         }
         else {
-
+            Node<T> current = first;
+            Node<T> no_aux = null;
+            for (int i = 0; i < position; i++) {
+                no_aux = current;
+                current = current.getNext();
+            }
+            no_aux.setNext(new Node<T>(element, current));
+            this.size ++;
         }
     }
 
-    public void removeAtBeginning() {
-        
+    public void removeAtBeginning() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("A lista esta vazia.");
+        }
+        first = first.getNext();
+        this.size--;
+        if (isEmpty()) {
+            last = null;
+        }
     }
 
-    public void removeAtEnd() {
-        
+    public void removeAtEnd() throws Exception {
+        if (isEmpty()) {
+            throw new Exception("A lista esta vazia.");
+        }
+        else if (size == 1) {
+            first = null;
+            last = null;
+        }
+        else {
+            Node<T> aux = first;
+            while (aux.getNext() != last) {
+                aux = aux.getNext();
+            }
+            aux.setNext(null);
+            last = aux;
+        }
+        size--;
     }
 
-    public void removeAt(int position) {
-        
+    public void removeAt(int position) throws Exception {
+        if (isEmpty()) {
+            throw new Exception("A lista esta vazia.");
+        }
+        else if (this.size < position+1) {
+            throw new Exception("A posicao " + position + " nao existe na lista.");
+        }
+        else {
+            Node<T> no_move = first;
+            Node<T> aux = null;
+            for (int i = 0; i < position; i++) {
+                aux = no_move;
+                no_move = no_move.getNext();
+            }
+            aux.setNext(no_move.getNext());
+            this.size --;
+        }
     }
 
-    public T search(int position) {
-        
+    public T search(int position) throws Exception {
+        if (isEmpty()) {
+            throw new Exception("A lista esta vazia.");
+        }
+        else if (this.size < position+1) {
+            throw new Exception("A posicao " + position + " nao existe na lista.");
+        }
+        else {
+            Node<T> no_aux = first;
+            for (int i = 0; i < position; i++) {
+                no_aux = no_aux.getNext();
+            }
+            return no_aux.getData();
+        }
+    }
+
+    public boolean contains(T element) throws Exception {
+        Node<T> current = first;
+        while (current != null) {
+            if (current == element) return true;
+            current = current.getNext();
+        }
+        return false;
     }
 
     public boolean isEmpty() {
@@ -70,35 +143,30 @@ public class LinkedList<T> {
     }
 
     public int size() {
-        if (isEmpty()){
-            return 0;
-        }
-        else {
-            return this.size;
-        }
+        return size;
     }
 
     public void clear() {
         this.first = null;
         this.last = null;
+        size = 0;
     }
 
     @Override
     public String toString(){
+        if (isEmpty()) return "[]";
+
         String saida;
 
-        saida = "[" + this.first.getData();
-        Node<T> no_aux = this.first;
-        for (int i = 1; i < this.size; i++) {
-            try {
-                no_aux = no_aux.getNext();
-            } catch (Exception ex) {
-                System.out.println(ex.toString());
-            }
-            saida += ", " + no_aux.getData();
+        StringBuilder sb = new StringBuilder("[");
+        Node<T> current = this.first;
+        while (current != null) {
+            sb.append(current.getData());
+            if (current.getNext() != null) sb.append(", ");
+            current = current.getNext();
         }
-        saida += "]";
-        return saida;
+        sb.append("]");
+        return sb.toString();
     }
     
 }
