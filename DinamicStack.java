@@ -4,36 +4,46 @@
  */
 package estruturasdados;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author marco
  */
 public class DinamicStack<T> {
-    
-    public void push(int elemento){
-        
+    private LinkedList<T> stack = new LinkedList<>();
+    private int size = 0;
+
+    public void push(T element){
+        stack.insertAtBeginning(element);
+        size ++;
     }
     
-    public void pop(){
-        
+    public T pop() throws Exception{
+        T saida = stack.getFirst().getData();
+        stack.removeAtBeginning();
+        size --;
+        return saida;
     }
     
-    public void peek(){
-        
+    public T peek(){
+        return stack.getFirst().getData();
     }
     
     public boolean isEmpty(){
-
+        return size == 0;
     }
     
-    public void size(){
-        
+    public int size(){
+        return this.size;
     }
     
     public void clear(){
-        
+        stack = new LinkedList<>();
+        size = 0;
+    }
+
+    @Override
+    public String toString() {
+        return stack.toString();
     }
     
 }
